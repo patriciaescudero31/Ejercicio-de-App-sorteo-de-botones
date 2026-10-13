@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elige tu destino</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app-card">
+    <header class="app-header">
+      <span class="badge">Sorteo Interactivo</span>
+      <h1 class="title">Elige tu destino</h1>
+      <p class="subtitle">Pulsa uno de los dos botones para descubrir qué te depara la suerte.</p>
+    </header>
+
+    <!-- Sección de botones de elección -->
+    <section class="choices-container" id="choices-container" aria-label="Opciones de destino">
+      <button id="btn-red" class="destiny-btn btn-red" type="button" aria-label="Elegir botón rojo">
+        <span class="btn-glow"></span>
+        <span class="btn-icon">🔴</span>
+        <span class="btn-text">Botón Rojo</span>
+      </button>
+
+      <button id="btn-blue" class="destiny-btn btn-blue" type="button" aria-label="Elegir botón azul">
+        <span class="btn-glow"></span>
+        <span class="btn-icon">🔵</span>
+        <span class="btn-text">Botón Azul</span>
+      </button>
+    </section>
+
+    <!-- Sección de resultado -->
+    <section id="result-box" class="result-box hidden" aria-live="polite">
+      <div id="result-icon" class="result-icon">✨</div>
+      <h2 id="result-text" class="result-text">Resultado</h2>
+      <p id="result-description" class="result-description"></p>
+    </section>
+
+    <!-- Botón para reiniciar -->
+    <footer class="actions-container">
+      <button id="btn-reset" class="reset-btn hidden" type="button">
+        <span class="reset-icon">🔄</span> Volver a jugar
+      </button>
+      
+      <!-- Contador opcional para mayor diversión -->
+      <div class="stats-bar">
+        <span>Victorias: <strong id="score-wins">0</strong></span>
+        <span class="divider">•</span>
+        <span>Derrotas: <strong id="score-losses">0</strong></span>
+      </div>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

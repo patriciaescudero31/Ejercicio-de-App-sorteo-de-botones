@@ -1,0 +1,376 @@
+/* ==========================================================================
+   RESET & VARIABLES GLOBALES
+   ========================================================================== */
+:root {
+  --bg-gradient: radial-gradient(circle at 50% 20%, #1e1e38 0%, #0c0d14 100%);
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(255, 255, 255, 0.12);
+  --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(99, 102, 241, 0.1);
+
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+
+  --red-gradient: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+  --red-glow: rgba(239, 68, 68, 0.45);
+
+  --blue-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  --blue-glow: rgba(59, 130, 246, 0.45);
+
+  --win-color: #22c55e;
+  --win-bg: rgba(34, 197, 94, 0.12);
+  --win-border: rgba(34, 197, 94, 0.35);
+
+  --lose-color: #f43f5e;
+  --lose-bg: rgba(244, 63, 94, 0.12);
+  --lose-border: rgba(244, 63, 94, 0.35);
+
+  --transition-smooth: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-gradient);
+  color: var(--text-main);
+  padding: 1.5rem;
+  overflow-x: hidden;
+}
+
+/* ==========================================================================
+   TARJETA PRINCIPAL (CARD)
+   ========================================================================== */
+.app-card {
+  width: 100%;
+  max-width: 580px;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  border-radius: 28px;
+  padding: 3rem 2.5rem;
+  box-shadow: var(--card-shadow);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.app-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 50% 0%, rgba(129, 140, 248, 0.15) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+.badge {
+  display: inline-block;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #a5b4fc;
+  background: rgba(99, 102, 241, 0.18);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  border-radius: 9999px;
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.5;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   BOTONES DE DESTINO (ROJO Y AZUL)
+   ========================================================================== */
+.choices-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.destiny-btn {
+  position: relative;
+  border: none;
+  border-radius: 20px;
+  padding: 2rem 1.25rem;
+  cursor: pointer;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-family: inherit;
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: var(--transition-smooth);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+  outline: none;
+}
+
+.destiny-btn .btn-icon {
+  font-size: 2.2rem;
+  transition: transform 0.25s ease;
+}
+
+.destiny-btn .btn-text {
+  letter-spacing: -0.01em;
+}
+
+/* Botón Rojo */
+.btn-red {
+  background: var(--red-gradient);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-red:hover:not(:disabled) {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 15px 30px var(--red-glow);
+}
+
+.btn-red:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Botón Azul */
+.btn-blue {
+  background: var(--blue-gradient);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-blue:hover:not(:disabled) {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 15px 30px var(--blue-glow);
+}
+
+.btn-blue:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+.destiny-btn:hover:not(:disabled) .btn-icon {
+  transform: scale(1.18);
+}
+
+.destiny-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  filter: grayscale(0.5);
+  transform: none !important;
+}
+
+/* ==========================================================================
+   CAJA DE RESULTADO
+   ========================================================================== */
+.result-box {
+  padding: 1.5rem;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  transition: var(--transition-smooth);
+}
+
+.result-icon {
+  font-size: 3rem;
+  animation: bounce 0.6s ease;
+}
+
+.result-text {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.result-description {
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+/* Estilos de Ganador */
+.result-box.win {
+  background: var(--win-bg);
+  border: 1px solid var(--win-border);
+  box-shadow: 0 0 30px rgba(34, 197, 94, 0.2);
+}
+
+.result-box.win .result-text {
+  color: var(--win-color);
+}
+
+/* Estilos de Perdedor */
+.result-box.lose {
+  background: var(--lose-bg);
+  border: 1px solid var(--lose-border);
+  box-shadow: 0 0 30px rgba(244, 63, 94, 0.2);
+}
+
+.result-box.lose .result-text {
+  color: var(--lose-color);
+}
+
+/* ==========================================================================
+   ACCIONES Y REINICIO
+   ========================================================================== */
+.actions-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.reset-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: var(--text-main);
+  padding: 0.9rem 2rem;
+  border-radius: 9999px;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: var(--transition-smooth);
+  animation: fadeInUp 0.3s ease forwards;
+}
+
+.reset-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+
+.reset-btn:active {
+  transform: translateY(0);
+}
+
+.reset-icon {
+  font-size: 1.2rem;
+  transition: transform 0.4s ease;
+}
+
+.reset-btn:hover .reset-icon {
+  transform: rotate(180deg);
+}
+
+/* Barra de Estadísticas */
+.stats-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.4rem 1.2rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stats-bar strong {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.stats-bar .divider {
+  opacity: 0.3;
+}
+
+/* ==========================================================================
+   UTILIDADES Y ANIMACIONES
+   ========================================================================== */
+.hidden {
+  display: none !important;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 520px) {
+  .app-card {
+    padding: 2rem 1.25rem;
+    gap: 1.5rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .choices-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .destiny-btn {
+    padding: 1.5rem 1rem;
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .destiny-btn .btn-icon {
+    font-size: 1.8rem;
+  }
+}
